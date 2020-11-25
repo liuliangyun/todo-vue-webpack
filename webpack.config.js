@@ -1,7 +1,13 @@
 const path = require('path')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const webpack = require('webpack')
 
-module.exports = {
+const isDev = process.env.NODE_ENV === 'development'
+
+const config = {
+  // 因为开发的是web应用
+  target: "web",     
   // 定义app的入口，为一个js文件
   entry: path.join(__dirname, 'src/index.js'),
   // 定义webpack打包后的出口，包括打包文件名和存储路径
@@ -55,6 +61,35 @@ module.exports = {
   },
   plugins: [
     // 使用vue-loader别忘了一定要引入VueLoaderPlugin
-    new VueLoaderPlugin()
+    new VueLoaderPlugin(),
+    // 当启动本地服务时html模板是必须提供的
+    new HtmlWebpackPlugin(),
+    // 这样定义以后，给webpack在编译过程中以及在页面上去判断环境时可以使用process.env.NODE_ENV
+    new webpack.DefinePlugin({
+      'process.env': {
+        // 这里必须写两层引号，不然打包的js文件中会认为process.env.NODE_ENV = development, development是个undefined变量
+        NODE_ENV: isDev ? '"development"' : '"production"'
+      }
+    })
   ]
 }
+
+if (isDev) {
+  // 帮助在页面上调试代码，因为浏览器看到的webpack编译之后的代码，而我们使用的是vue文件，且js使用的是ES6语法，这样配置之后可以在浏览器debug时直接看到我们写的源代码
+  config.devtool = 'eval-cheap-module-source-map'
+
+  // devServer启动后是一个服务，设定host和port
+  config.devServer = {
+    port: 8000,
+    // host可以设为localhost表示本机地址，这里设为0.0.0.0也是本机地址，但是使用这种方式其他机器可以通过ip访问你的本地服务
+    host: '0.0.0.0',
+    // webpack编译时有任何错误都出现在网页中
+    overlay: {
+      errors: true
+    },
+    // 开启热加载，不刷新即可更新页面的数据
+    hot: true
+  }
+}
+
+module.exports = config

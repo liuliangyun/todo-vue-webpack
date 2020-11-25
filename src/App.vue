@@ -1,5 +1,5 @@
 <template>
-  <div id="test">{{text}}</div>
+  <button id="test" @click="clickButton">{{text}}</button>
 </template>
 
 <script>
@@ -7,6 +7,11 @@
     data () {
       return {
         text: 'abc'
+      }
+    },
+    methods: {
+      clickButton () {
+        console.log('click')
       }
     }
   }
