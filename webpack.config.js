@@ -24,7 +24,7 @@ const config = {
       },
       // 应用于独立的js文件和vue文件中的`<script>`标签下的内容
       {
-        test: /\.js$/,
+        test: /\.(js|jsx)$/,
         loader: 'babel-loader'
       },
       // 应用于独立的css文件和vue文件中的`<style>`标签下的内容
@@ -41,6 +41,14 @@ const config = {
         use: [
           'vue-style-loader',
           'css-loader',
+          {
+            loader: 'postcss-loader',
+            options: {
+              // 因为stylus-loader可以生成sourceMap,postcss也可以生成
+              // 当前一个loader已经生成了sourceMap，postcss直接使用生成好的sourceMap就可以了，提高编译效率
+              sourceMap: true
+            }
+          },
           'stylus-loader'      // 帮助加载stylus文件，转成css代码
         ]
       },

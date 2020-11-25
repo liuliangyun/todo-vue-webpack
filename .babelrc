@@ -1,0 +1,11 @@
+// 演示如何配置使得支持写vue的render方法和写jsx
+// babel使用了7.x版本后，对应的babel-preset-env也要换成@babel/preset-env
+
+{
+  "presets": [
+    "@babel/preset-env"
+  ],
+  "plugins": [
+    "transform-vue-jsx"
+  ]
+}
