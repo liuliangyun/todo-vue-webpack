@@ -64,12 +64,9 @@
   }
 </script>
 
-<style lang="scss" scoped>
-  #todo-app {
-    width: 600px;
-    margin: 0 auto;
-    box-shadow: 0 0 5px #666;
-    color: blue;
-  }
-    
+<style lang="stylus" scoped>
+// #todo-app
+//   width 600px
+//   margin 0 auto
+//   box-shadow 0 0 5px #666
 </style>

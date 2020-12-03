@@ -15,9 +15,6 @@ const config = {
     filename: 'bundle.js',
     path: path.join(__dirname, 'dist')
   },
-  resolve: {
-    extensions: ['.js', '.vue', '.json', '.scss'],
-  },
   // webpack原生只支持js和json文件类型，且只支持ES5语法，我们使用.vue文件结尾的文件时，需要为其指定loader
   module: {
     rules: [
@@ -31,68 +28,30 @@ const config = {
         loader: 'babel-loader'
       },
       // 应用于独立的css文件和vue文件中的`<style>`标签下的内容
-      // {
-      //   test: /\.css$/,
-      //   // use 中的loader就是这样一级一级向上传递，每一层loader只处理自己关心的部分
-      //   use: [
-      //     'vue-style-loader',      // 帮助将css样式写到html中
-      //     'css-loader'        // 帮助从css文件中加载样式，至于最终是插入到html中还是写到新的文件中由其他loader决定
-      //   ]
-      // },
       {
-        test: /\.css$|\.scss$/,
+        test: /\.css$/,
+        // use 中的loader就是这样一级一级向上传递，每一层loader只处理自己关心的部分
         use: [
-          'vue-style-loader',
-          {
-            loader: 'css-loader',
-            options: {
-              modules: {
-                mode: 'global',
-                localIdentName: '[name]__[local]--[hash:base64:5]'
-              }
-            }
-          },
-          'postcss-loader',
-          'sass-loader'
+          'vue-style-loader',      // 帮助将css样式写到html中
+          'css-loader'        // 帮助从css文件中加载样式，至于最终是插入到html中还是写到新的文件中由其他loader决定
         ]
       },
-      // {
-      //   test: /\.styl$|\.css$/,
-      //   use: [
-      //     'vue-style-loader',
-      //     'css-loader',
-      //     {
-      //       loader: "stylus-loader",
-      //       options: {
-      //         sourceMap: true,
-      //       }
-      //     } 
-          // 'vue-style-loader',
-          // {
-          //   loader: 'css-loader',
-          //   options: {
-          //     modules: {
-          //       mode: 'global',
-          //       localIdentName: '[name]--[hash:base64:5]'
-          //     }
-          //   }
-          // },
-          // {
-          //   loader: 'postcss-loader',
-          //   options: {
-          //     // 因为stylus-loader可以生成sourceMap,postcss也可以生成
-          //     // 当前一个loader已经生成了sourceMap，postcss直接使用生成好的sourceMap就可以了，提高编译效率
-          //     sourceMap: true
-          //   }
-          // },
-          // {
-          //   loader: "stylus-loader",
-          //   options: {
-          //     sourceMap: true,
-          //   },
-          // }, // 帮助加载stylus文件，转成css代码
-        // ]
-      // },
+      {
+        test: /\.styl$/,
+        use: [
+          'vue-style-loader',
+          'css-loader',
+          {
+            loader: 'postcss-loader',
+            options: {
+              // 因为stylus-loader可以生成sourceMap,postcss也可以生成
+              // 当前一个loader已经生成了sourceMap，postcss直接使用生成好的sourceMap就可以了，提高编译效率
+              sourceMap: true
+            }
+          },
+          'stylus-loader'      // 帮助加载stylus文件，转成css代码
+        ]
+      },
       {
         test: /\.(gif|png|jpg|jpeg|svg)$/,
         use: [
@@ -112,9 +71,7 @@ const config = {
     // 使用vue-loader别忘了一定要引入VueLoaderPlugin
     new VueLoaderPlugin(),
     // 当启动本地服务时html模板是必须提供的
-    new HtmlWebpackPlugin({
-      inject: true,
-    }),
+    new HtmlWebpackPlugin(),
     // 这样定义以后，给webpack在编译过程中以及在页面上去判断环境时可以使用process.env.NODE_ENV
     new webpack.DefinePlugin({
       'process.env': {
@@ -142,7 +99,5 @@ if (isDev) {
     hot: true
   }
 }
-
-console.log(config.module.rules)
 
 module.exports = config
