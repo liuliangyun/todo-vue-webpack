@@ -1,13 +1,13 @@
 <template>
   <section id="todo-app">
     <Add @enter="addTodo" />
-    <Todo 
-      v-for="todo in filterTodos" 
+    <Todo
+      v-for="todo in filterTodos"
       :key=todo.id
       :todo=todo
       @del="deleteTodo"
     />
-    <Tabs 
+    <Tabs
       :filter="filter"
       :todos="todos"
       @toggle="toggleFilter"
@@ -65,8 +65,8 @@
 </script>
 
 <style lang="stylus" scoped>
-// #todo-app
-//   width 600px
-//   margin 0 auto
-//   box-shadow 0 0 5px #666
+ #todo-app
+   width 600px
+   margin 0 auto
+   box-shadow 0 0 5px #666
 </style>

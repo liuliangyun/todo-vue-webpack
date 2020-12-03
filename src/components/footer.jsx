@@ -8,7 +8,7 @@ export default {
   },
   render () {
     return (
-      <div id="todo-footer">
+      <div class="todo-footer">
         <span>Written by {this.author}</span>
       </div>
     )

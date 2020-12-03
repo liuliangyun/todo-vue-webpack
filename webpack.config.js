@@ -7,7 +7,7 @@ const isDev = process.env.NODE_ENV === 'development'
 
 const config = {
   // 因为开发的是web应用
-  target: "web",     
+  target: "web",
   // 定义app的入口，为一个js文件
   entry: path.join(__dirname, 'src/index.js'),
   // 定义webpack打包后的出口，包括打包文件名和存储路径
@@ -37,7 +37,7 @@ const config = {
         ]
       },
       {
-        test: /\.styl$/,
+        test: /\.styl(us)?$/,
         use: [
           'vue-style-loader',
           'css-loader',
