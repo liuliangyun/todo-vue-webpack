@@ -3,6 +3,8 @@ const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 // 将css提取到单独的文件中，为每个包含 CSS 的 JS 文件创建一个 CSS 文件，并且支持 CSS 和 SourceMaps 的按需加载。
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+// 每次webpack build成功之后清除之前的 webpack's output.path 目录下的文件
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const webpack = require('webpack')
 
 const isDev = process.env.NODE_ENV === 'development'
@@ -47,6 +49,7 @@ const config = {
     ]
   },
   plugins: [
+    new CleanWebpackPlugin(),
     // 使用vue-loader别忘了一定要引入VueLoaderPlugin
     new VueLoaderPlugin(),
     // 当启动本地服务时html模板是必须提供的
