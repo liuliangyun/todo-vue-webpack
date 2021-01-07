@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import App from './App.vue'
+import App from './app.vue'
 import './assets/styles/global.styl'
 // import './assets/styles/test.css'
 
