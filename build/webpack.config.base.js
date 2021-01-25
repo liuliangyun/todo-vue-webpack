@@ -1,4 +1,7 @@
 const path = require('path')
+const createVueLoaderOptions = require('./vue-loader.config')
+
+const isDev = process.env.NODE_ENV === 'development'
 
 const config = {
   // 因为开发的是web应用
@@ -16,7 +19,8 @@ const config = {
     rules: [
       {
         test: /\.vue$/,            // 匹配左右以.vue作为文件结尾的文件
-        loader: 'vue-loader'
+        loader: 'vue-loader',
+        options: createVueLoaderOptions(isDev)
       },
       // 应用于独立的jsx文件和vue文件中的`<script>`标签下的内容
       {
