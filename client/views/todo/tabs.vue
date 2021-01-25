@@ -43,7 +43,7 @@
   }
 </script>
 
-<style lang="stylus" scoped>
+<style lang="stylus">
  .todo-helper
    font-weight 100
    display flex

@@ -64,7 +64,7 @@
   }
 </script>
 
-<style lang="stylus" scoped>
+<style lang="stylus">
  #todo-app
    width 600px
    margin 0 auto

@@ -19,7 +19,7 @@ export default {
 }
 </script>
 
-<style lang="stylus" scoped>
+<style lang="stylus">
  .todo-add
    position relative
    margin 0

@@ -10,6 +10,7 @@ const merge = require('webpack-merge')
 const baseConfig = require('./webpack.config.base')
 
 const isDev = process.env.NODE_ENV === 'development'
+console.log('isDev: ', isDev)
 
 // devServer启动后是一个服务，设定host和port
 const devServer = {
@@ -52,7 +53,16 @@ if (isDev) {
           test: /\.styl(us)?$/,
           use: [
             'vue-style-loader',
-            'css-loader',
+            // 'css-loader',
+            // import样式文件时使用css modules
+            {
+              loader: 'css-loader',
+              options: {
+                modules: true,
+                localIdentName: isDev ? '[path][name]__[local]--[hash:base64:5]' : '[hash:base64:5]',
+                camelCase: true
+              }
+            },
             {
               loader: 'postcss-loader',
               options: {

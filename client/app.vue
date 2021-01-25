@@ -20,7 +20,7 @@
   }
 </script>
 
-<style lang="stylus" scoped>
+<style lang="stylus">
    #app
      position absolute
      left 0

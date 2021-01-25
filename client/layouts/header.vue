@@ -4,7 +4,7 @@
   </div>
 </template>
 
-<style lang="stylus" scoped>
+<style lang="stylus">
  .todo-header
    text-align center
    h1
