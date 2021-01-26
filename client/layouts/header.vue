@@ -1,10 +1,10 @@
 <template>
-  <div class="todo-header">
+  <div :class="$style.todoHeader">
     <h1>Todo</h1>
   </div>
 </template>
 
-<style lang="stylus">
+<style lang="stylus" module>
  .todo-header
    text-align center
    h1

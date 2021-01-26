@@ -49,30 +49,53 @@ if (isDev) {
     devtool: 'eval-cheap-module-source-map',
     module: {
       rules: [
+        // vue-loader@15以后，import样式文件/在vue文件内部 使用css modules都统一在这里配置
+        // <style> 标签上的 module 特性仍然需要用来局部注入到组件中
+        // 如果你只想在某些 Vue 组件中使用 CSS Modules，你可以使用 oneOf 规则并在 resourceQuery 字符串中检查 module 字符串
         {
           test: /\.styl(us)?$/,
-          use: [
-            'vue-style-loader',
-            // 'css-loader',
-            // import样式文件时使用css modules
+          oneOf: [
+            // 这里匹配`<style module>`
             {
-              loader: 'css-loader',
-              options: {
-                modules: true,
-                localIdentName: isDev ? '[path][name]__[local]--[hash:base64:5]' : '[hash:base64:5]',
-                camelCase: true
-              }
+              resourceQuery: /module/,
+              use: [
+                'vue-style-loader',
+                {
+                  loader: 'css-loader',
+                  options: {
+                    modules: true,
+                    localIdentName: isDev ? '[path][name]__[local]--[hash:base64:5]' : '[hash:base64:5]',
+                    camelCase: true
+                  }
+                },
+                {
+                  loader: 'postcss-loader',
+                  options: {
+                    // 因为stylus-loader可以生成sourceMap,postcss也可以生成
+                    // 当前一个loader已经生成了sourceMap，postcss直接使用生成好的sourceMap就可以了，提高编译效率
+                    sourceMap: true
+                  }
+                },
+                'stylus-loader'      // 帮助加载stylus文件，转成css代码
+              ]
             },
+            // 这里匹配普通的 `<style>` 或 `<style scoped>`
             {
-              loader: 'postcss-loader',
-              options: {
-                // 因为stylus-loader可以生成sourceMap,postcss也可以生成
-                // 当前一个loader已经生成了sourceMap，postcss直接使用生成好的sourceMap就可以了，提高编译效率
-                sourceMap: true
-              }
-            },
-            'stylus-loader'      // 帮助加载stylus文件，转成css代码
-          ]
+              use: [
+                'vue-style-loader',
+                'css-loader',
+                {
+                  loader: 'postcss-loader',
+                  options: {
+                    // 因为stylus-loader可以生成sourceMap,postcss也可以生成
+                    // 当前一个loader已经生成了sourceMap，postcss直接使用生成好的sourceMap就可以了，提高编译效率
+                    sourceMap: true
+                  }
+                },
+                'stylus-loader'      // 帮助加载stylus文件，转成css代码
+              ]
+            }
+          ],
         }
       ]
     },

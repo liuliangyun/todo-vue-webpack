@@ -1,4 +1,4 @@
-import styles from '../assets/styles/footer.styl'
+import '../assets/styles/footer.styl'
 
 export default {
   data () {
@@ -8,7 +8,7 @@ export default {
   },
   render () {
     return (
-      <div class={styles.todoFooter}>
+      <div class='todo-footer'>
         <span>Written by {this.author}</span>
       </div>
     )
