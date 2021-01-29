@@ -3,9 +3,10 @@
     <Add @enter="addTodo" />
     <Todo
       v-for="todo in filterTodos"
-      :key=todo.id
-      :todo=todo
+      :key="todo.id"
+      :todo="todo"
       @del="deleteTodo"
+      @toggle="toggleTodoState"
     />
     <Tabs
       :filter="filter"
@@ -17,51 +18,55 @@
 </template>
 
 <script>
-  import Add from './add.vue'
-  import Todo from './todo.vue'
-  import Tabs from './tabs.vue'
+import Add from './add.vue'
+import Todo from './todo.vue'
+import Tabs from './tabs.vue'
 
-  let index = 0
-  export default {
-    data () {
-      return {
-        todos: [],
-        filter: 'all'
+let index = 0
+export default {
+  components: {
+    Add,
+    Todo,
+    Tabs
+  },
+  data () {
+    return {
+      todos: [],
+      filter: 'all'
+    }
+  },
+  computed: {
+    filterTodos () {
+      if (this.filter === 'all') {
+        return this.todos
       }
+      const isCompleted = this.filter === 'completed'
+      return this.todos.filter(todo => todo.completed === isCompleted)
+    }
+  },
+  methods: {
+    addTodo (value) {
+      this.todos.unshift({
+        id: index++,
+        content: value,
+        completed: false
+      })
     },
-    components: {
-      Add,
-      Todo,
-      Tabs
+    deleteTodo (id) {
+      this.todos.splice(this.todos.findIndex(todo => id === todo.id), 1)
     },
-    computed: {
-      filterTodos () {
-        if(this.filter === 'all') {
-          return this.todos
-        }
-        const isCompleted = this.filter === 'completed'
-        return this.todos.filter(todo => todo.completed === isCompleted)
-      }
+    toggleTodoState (todo) {
+      todo.completed = !todo.completed
+      this.todos.splice(this.todos.findIndex(t => t.id === todo.id), 1, todo)
     },
-    methods: {
-      addTodo (value) {
-        this.todos.unshift({
-          id: index++,
-          content: value,
-          completed: false
-        })
-      },
-      deleteTodo (id) {
-        this.todos.splice(this.todos.findIndex(todo => id === todo.id), 1)
-      },
-      toggleFilter (state) {
-        this.filter = state
-      },
-      clearCompletedTodos () {
-        this.todos = this.todos.filter(todo => !todo.completed)
-      }
+    toggleFilter (state) {
+      this.filter = state
+    },
+    clearCompletedTodos () {
+      this.todos = this.todos.filter(todo => !todo.completed)
     }
   }
+}
 </script>
 
 <style lang="stylus">

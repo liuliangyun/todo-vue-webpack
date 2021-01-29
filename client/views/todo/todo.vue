@@ -3,27 +3,35 @@
     <input
       type="checkbox"
       class="toggle"
-      v-model="todo.completed"
+      :checked="todo.completed"
+      @click="handleToggle"
+    >
+    <label for="">{{ todo.content }}</label>
+    <button
+      class="destroy"
+      @click="deleteTodo"
     />
-    <label for="">{{todo.content}}</label>
-    <button class="destroy" @click="deleteTodo"></button>
   </div>
 </template>
 
 <script>
-  export default {
-    props: {
-      todo: {
-        required: true,
-        type: Object
-      }
+export default {
+  props: {
+    todo: {
+      required: true,
+      type: Object
+    }
+  },
+  methods: {
+    deleteTodo () {
+      this.$emit('del', this.todo.id)
     },
-    methods: {
-      deleteTodo () {
-        this.$emit('del', this.todo.id)
-      }
+    handleToggle (e) {
+      e.preventDefault()
+      this.$emit('toggle', this.todo)
     }
   }
+}
 </script>
 
 <style lang="stylus">

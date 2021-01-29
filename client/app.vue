@@ -1,23 +1,23 @@
 <template>
   <div id="app">
-    <Header></Header>
-    <Todos></Todos>
-    <Footer></Footer>
+    <Header />
+    <Todos />
+    <Footer />
   </div>
 </template>
 
 <script>
-  import Header from './layouts/header.vue'
-  import Footer from './layouts/footer.jsx'
-  import Todos from './views/todo/index.vue'
+import Header from './layouts/header.vue'
+import Footer from './layouts/footer.jsx'
+import Todos from './views/todo/index.vue'
 
-  export default {
-    components: {
-      Header,
-      Footer,
-      Todos
-    },
+export default {
+  components: {
+    Header,
+    Footer,
+    Todos
   }
+}
 </script>
 
 <style lang="stylus">

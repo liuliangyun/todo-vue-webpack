@@ -5,7 +5,7 @@
     autofocus
     placeholder="接下来做什么"
     @keyup.enter="addTodo"
-  />
+  >
 </template>
 
 <script>
