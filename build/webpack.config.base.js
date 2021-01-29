@@ -18,6 +18,12 @@ const config = {
   module: {
     rules: [
       {
+        test: /\.(vue|js|jsx)$/,
+        loader: 'eslint-loader',
+        exclude: /node_modules/,
+        enforce: 'pre'       // 指对于这几种类型的文件使用eslint-loader进行预处理，'post'表示后处理
+      },
+      {
         test: /\.vue$/,            // 匹配左右以.vue作为文件结尾的文件
         loader: 'vue-loader',
         options: createVueLoaderOptions(isDev)
