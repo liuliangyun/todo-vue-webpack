@@ -1,12 +1,13 @@
 <template>
   <div :class="['todo-item', todo.completed ? 'completed' : '']">
     <input
+      :id="todo.id"
       type="checkbox"
       class="toggle"
       :checked="todo.completed"
       @click="handleToggle"
     >
-    <label for="">{{ todo.content }}</label>
+    <label :for="todo.id">{{ todo.content }}</label>
     <button
       class="destroy"
       @click="deleteTodo"
@@ -51,10 +52,6 @@ export default {
      display block
      line-height 1.2
      transition color 0.4s
-   &.completed
-     label
-       color #d9d9d9
-       text-decoration line-through
    .toggle
      text-align center
      width 50px
@@ -67,9 +64,7 @@ export default {
      appearance none
      outline none
      &:after
-       content url('../../assets/images/unChecked.svg')
-     &:checked:after
-       content url('../../assets/images/checked.svg')
+       content url('/client/assets/images/unChecked.svg')
    .destroy
      position absolute
      top 0
@@ -87,4 +82,10 @@ export default {
      border-width 0
      cursor pointer
      outline none
+   &.completed
+     label
+       color #d9d9d9
+       text-decoration line-through
+     .toggle:after
+       content url('/client/assets/images/checked.svg')
 </style>
